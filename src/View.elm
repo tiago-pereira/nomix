@@ -5,6 +5,7 @@ import Html.App
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Players.List
+import Stocks.List
 import Players.Edit
 import Players.Models exposing (PlayerId)
 import Routing exposing (Route(..))
@@ -19,10 +20,16 @@ view model =
 page : Model -> Html Msg
 page model =
     case model.route of
+        StocksRoute ->
+            Html.App.map StocksMsg (Stocks.List.view model.stocks)
+
         PlayersRoute ->
             Html.App.map PlayersMsg (Players.List.view model.players)
 
         PlayerRoute id ->
+            playerEditPage model id
+
+        StockRoute id ->
             playerEditPage model id
 
         NotFoundRoute ->

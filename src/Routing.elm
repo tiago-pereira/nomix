@@ -8,6 +8,8 @@ import Players.Models exposing (PlayerId)
 
 type Route
     = PlayersRoute
+    | StocksRoute
+    | StockRoute Int
     | PlayerRoute PlayerId
     | NotFoundRoute
 
@@ -15,9 +17,11 @@ type Route
 matchers : Parser (Route -> a) a
 matchers =
     oneOf
-        [ format PlayersRoute (s "")
+        [ format StocksRoute (s "")
+        , format StockRoute (s "stocks" </> int)
         , format PlayerRoute (s "players" </> int)
         , format PlayersRoute (s "players")
+        , format StocksRoute (s "stocks")
         ]
 
 
