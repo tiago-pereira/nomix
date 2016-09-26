@@ -1,18 +1,73 @@
 module Stocks.List exposing (..)
 
 import Html exposing (..)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onClick, onMouseEnter, onMouseLeave)
 import Html.Attributes exposing (class)
+import Debug
 import Stocks.Messages exposing (..)
-import Stocks.Models exposing (Stock)
+import Stocks.Models exposing (Stock, Model)
+import Material.Card as Card
+import Material.Color as Color
+import Material.Elevation as Elevation
+import Material.Options as Options exposing (cs, css)
 
 
-view : List Stock -> Html Msg
-view stocks =
+view : Model -> Html Msg
+view model =
     div []
-        [ nav stocks
-        , list stocks
+        [ nav model.stocks
+        , list model
         ]
+
+
+wide : Float
+wide =
+    300
+
+
+margin2 : Options.Property a b
+margin2 =
+    css "margin" "4px 8px 4px 0px"
+
+
+stockCardMdl : Stock -> Html Msg
+stockCardMdl stock =
+    let
+        white =
+            Color.text Color.white
+
+        card =
+            Card.view
+                [ dynamic stock 6 stock.raised
+                , css "width" (toString wide ++ "px")
+                , margin2
+                ]
+                [ Card.title []
+                    [ Card.head [ white ] [ text "Tiago" ]
+                    , Card.subhead [ white ] [ text "Cape Town, South Africa" ]
+                    ]
+                ]
+
+        code =
+            ""
+
+        comment =
+            Nothing
+    in
+        card
+
+
+dynamic : Stock -> Int -> Int -> Options.Style Msg
+dynamic stock k raised =
+    [ if raised == k then
+        Elevation.e8
+      else
+        Elevation.e2
+    , Elevation.transition 250
+    , Options.attribute <| onMouseEnter (Raise stock k)
+    , Options.attribute <| onMouseLeave (Raise stock -1)
+    ]
+        |> Options.many
 
 
 nav : List Stock -> Html Msg
@@ -21,10 +76,10 @@ nav stocks =
         [ div [ class "left p2" ] [ text "Stocks" ] ]
 
 
-list : List Stock -> Html Msg
-list stocks =
+list : Model -> Html Msg
+list model =
     div [ class "p2" ]
-        (List.map stockCard stocks)
+        (List.map stockCardMdl model.stocks)
 
 
 editBtn : Stock -> Html Msg

@@ -1,5 +1,7 @@
 module Stocks.Models exposing (..)
 
+import Material
+
 
 type alias Stock =
     { id : Int
@@ -9,4 +11,18 @@ type alias Stock =
     , sellPrice : Maybe Float
     , amount : Int
     , revenue : Float
+    , raised : Int
+    }
+
+
+type alias Model =
+    { stocks : List Stock
+    , mdl : Material.Model
+    }
+
+
+initialModel : Model
+initialModel =
+    { stocks = []
+    , mdl = Material.model
     }

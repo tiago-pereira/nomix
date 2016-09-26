@@ -7,7 +7,8 @@ import Players.Models exposing (PlayerId)
 
 
 type Route
-    = PlayersRoute
+    = BlogRoute
+    | PlayersRoute
     | StocksRoute
     | StockRoute Int
     | PlayerRoute PlayerId
@@ -22,6 +23,7 @@ matchers =
         , format PlayerRoute (s "players" </> int)
         , format PlayersRoute (s "players")
         , format StocksRoute (s "stocks")
+        , format BlogRoute (s "blog")
         ]
 
 

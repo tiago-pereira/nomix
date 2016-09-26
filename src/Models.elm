@@ -1,13 +1,13 @@
 module Models exposing (..)
 
 import Players.Models exposing (Player)
-import Stocks.Models exposing (Stock)
+import Stocks.Models
 import Routing
 
 
 type alias Model =
     { players : List Player
-    , stocks : List Stock
+    , stocks : Stocks.Models.Model
     , route : Routing.Route
     }
 
@@ -15,6 +15,6 @@ type alias Model =
 initialModel : Routing.Route -> Model
 initialModel route =
     { players = []
-    , stocks = []
+    , stocks = Stocks.Models.initialModel
     , route = route
     }

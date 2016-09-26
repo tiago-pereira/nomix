@@ -25,7 +25,7 @@ collectionDecoder =
 
 memberDecoder : Decode.Decoder Stock
 memberDecoder =
-    Decode.object7 Stock
+    Decode.object8 Stock
         ("id" := Decode.int)
         ("currentPrice" := Decode.float)
         ("code" := Decode.string)
@@ -33,3 +33,4 @@ memberDecoder =
         (Decode.maybe ("sellPrice" := Decode.float))
         ("amount" := Decode.int)
         ("revenue" := Decode.float)
+        ("raised" := Decode.int)

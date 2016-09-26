@@ -5,10 +5,10 @@ import Models exposing (Model)
 import Players.Update
 import Stocks.Update
 
-
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+
         PlayersMsg subMsg ->
             let
                 ( updatedPlayers, cmd ) =

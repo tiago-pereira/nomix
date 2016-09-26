@@ -1,7 +1,8 @@
 module Stocks.Messages exposing (..)
 
 import Http
-import Stocks.Models exposing (Stock)
+import Stocks.Models exposing (Stock, Model)
+import Material
 
 
 type Msg
@@ -9,3 +10,5 @@ type Msg
     | FetchAllFail Http.Error
     | ShowStocks
     | ShowStock Int
+    | Raise Stock Int
+    | Mdl (Material.Msg Msg)
