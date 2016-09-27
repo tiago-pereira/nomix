@@ -10,6 +10,7 @@ import Material.Card as Card
 import Material.Color as Color
 import Material.Elevation as Elevation
 import Material.Options as Options exposing (cs, css)
+import Material.Typography as Typography
 
 
 view : Model -> Html Msg
@@ -33,26 +34,26 @@ margin2 =
 stockCardMdl : Stock -> Html Msg
 stockCardMdl stock =
     let
-        white =
-            Color.text Color.white
-
         card =
             Card.view
                 [ dynamic stock 6 stock.raised
                 , css "width" (toString wide ++ "px")
+                , css "cursor" "pointer"
+                , cs "sm-col"
+                , cs "flex"
                 , margin2
                 ]
                 [ Card.title []
-                    [ Card.head [ white ] [ text "Tiago" ]
-                    , Card.subhead [ white ] [ text "Cape Town, South Africa" ]
+                    [ Card.head
+                        [ cs "flex col-12"
+                        , css "justify-content" "space-between"
+                        ]
+                        [ div [] [ text stock.code ]
+                        , div [ class "green" ] [ text (toString stock.currentPrice) ]
+                        ]
                     ]
+                , Card.text [] [ text "Tiago" ]
                 ]
-
-        code =
-            ""
-
-        comment =
-            Nothing
     in
         card
 
@@ -78,7 +79,9 @@ nav stocks =
 
 list : Model -> Html Msg
 list model =
-    div [ class "p2" ]
+    div
+        [ class "p2"
+        ]
         (List.map stockCardMdl model.stocks)
 
 
