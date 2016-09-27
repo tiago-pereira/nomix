@@ -33,4 +33,4 @@ memberDecoder =
         (Decode.maybe ("sellPrice" := Decode.float))
         ("amount" := Decode.int)
         ("revenue" := Decode.float)
-        ("raised" := Decode.int)
+        (Decode.oneOf [ "raised" := Decode.int, Decode.succeed -1 ])
