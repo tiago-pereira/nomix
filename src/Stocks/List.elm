@@ -16,9 +16,50 @@ import Material.Typography as Typography
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ nav model.stocks
-        , list model
+    div [] <|
+        [ Options.stylesheet styles
+        , Layout.render Mdl
+            model.mdl
+            [ Layout.fixedHeader
+            , Layout.fixedDrawer
+            , Options.css "display" "flex !important"
+            , Options.css "flex-direction" "row"
+            , Options.css "align-items" "center"
+            ]
+            { header = [ viewHeader model ]
+            , drawer = []
+            , tabs = ( [], [] )
+            , main = [ list model ]
+            }
+        ]
+
+
+styles : String
+styles =
+    """
+   .demo-options .mdl-checkbox__box-outline {
+      border-color: rgba(255, 255, 255, 0.89);
+    }
+   .mdl-layout__drawer {
+      border: none !important;
+   }
+   .mdl-layout__drawer .mdl-navigation__link:hover {
+      background-color: #00BCD4 !important;
+      color: #37474F !important;
+    }
+   """
+
+
+viewHeader : Model -> Html Msg
+viewHeader model =
+    Layout.row
+        [ Color.background <| Color.color Color.Grey Color.S100
+        , Color.text <| Color.color Color.Grey Color.S900
+        ]
+        [ Layout.title [] [ text "NOMIX" ]
+        , Layout.spacer
+        , Layout.navigation []
+            []
         ]
 
 
@@ -53,7 +94,7 @@ stockCardMdl stock =
                         , div [ class "green" ] [ text (toString stock.currentPrice) ]
                         ]
                     ]
-                , Card.text [] [ text "Tiago" ]
+                , Card.text [] [ text <| "Quantidade: " ++ toString stock.amount ]
                 ]
     in
         card
