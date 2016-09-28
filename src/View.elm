@@ -6,6 +6,7 @@ import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Players.List
 import Stocks.List
+import Stocks.Edit
 import Players.Edit
 import Players.Models exposing (PlayerId)
 import Routing exposing (Route(..))
@@ -30,10 +31,26 @@ page model =
             playerEditPage model id
 
         StockRoute id ->
-            playerEditPage model id
+            stockEditPage model id
 
         NotFoundRoute ->
             notFoundView
+
+
+stockEditPage : Model -> Int -> Html Msg
+stockEditPage model stockId =
+    let
+        maybeStock =
+            model.stocks.stocks
+                |> List.filter (\stock -> stock.id == stockId)
+                |> List.head
+    in
+        case maybeStock of
+            Just stock ->
+                Html.App.map StocksMsg (Stocks.Edit.view stock)
+
+            Nothing ->
+                notFoundView
 
 
 playerEditPage : Model -> PlayerId -> Html Msg

@@ -9,6 +9,7 @@ import Stocks.Models exposing (Stock, Model)
 import Material.Card as Card
 import Material.Color as Color
 import Material.Elevation as Elevation
+import Material.Layout as Layout
 import Material.Options as Options exposing (cs, css)
 import Material.Typography as Typography
 
@@ -67,6 +68,7 @@ dynamic stock k raised =
     , Elevation.transition 250
     , Options.attribute <| onMouseEnter (Raise stock k)
     , Options.attribute <| onMouseLeave (Raise stock -1)
+    , Options.attribute <| onClick (ShowStock stock.id)
     ]
         |> Options.many
 
